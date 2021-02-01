@@ -1,6 +1,9 @@
+const restController = require('../controllers/restController.js')
 module.exports = (app) => {
 
   app.get('/', (req, res) => {
-    res.send('Hello World!')
+    res.redirect('/restaurant')
   })
+
+  app.get('/restaurant', restController.getRestaurants)
 }
