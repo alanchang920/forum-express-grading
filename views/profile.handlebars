@@ -1,0 +1,23 @@
+<div class="col d-flex justify-content-center">
+  <div class="card mb-3 " style="max-width: 540px;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="{{#if profile.image}}{{profile.image}}{{else}}https://i.imgur.com/KZD5zDk.jpg{{/if}}" class="card-img"
+          alt="avatar">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">{{profile.name}}</h5>
+          <p class="card-text">{{profile.email}}</p>
+
+          {{#ifCond user.id profile.id}}
+          <a href="/users/{{profile.id}}/edit">
+            <button class="btn btn-primary">Edit</button>
+          </a>
+          {{/ifCond}}
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
