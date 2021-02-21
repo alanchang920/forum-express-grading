@@ -1,5 +1,5 @@
-<div class="col d-flex justify-content-center">
-  <div class="card mb-3 " style="max-width: 540px;">
+<div class="profile-container d-flex flex-column justify-content-center align-items-center">
+  <div class="card mb-3" style="width: 768px;">
     <div class="row g-0">
       <div class="col-md-4">
         <img src="{{#if profile.image}}{{profile.image}}{{else}}https://i.imgur.com/KZD5zDk.jpg{{/if}}" class="card-img"
@@ -9,6 +9,7 @@
         <div class="card-body">
           <h5 class="card-title">{{profile.name}}</h5>
           <p class="card-text">{{profile.email}}</p>
+          <p class="card-text">{{commentedRestaurants.length}} 已評論餐廳</p>
 
           {{#ifCond user.id profile.id}}
           <a href="/users/{{profile.id}}/edit">
@@ -20,4 +21,16 @@
       </div>
     </div>
   </div>
-</div>
+  <div class="card" style="width: 768px;">
+    <div class="card-header">{{commentedRestaurants.length}} 已評論餐廳</div>
+    <div class="row p-3">
+      {{#each commentedRestaurants}}
+      <div class="col-md-2 mb-1">
+        <a href="/restaurants/{{this.id}}">
+          <img src="{{this.image}}" alt="" class="img-fluid">
+          <p>{{this.name}}</p>
+        </a>
+      </div>
+      {{/each}}
+    </div>
+  </div>
