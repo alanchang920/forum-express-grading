@@ -46,7 +46,7 @@ const adminService = {
             CategoryId: req.body.categoryId,
           }).then((restaurant) => {
             callback({ status: 'success', message: 'restaurant was successfully created' });
-          });
+          })
         })
         .catch((err) => {
           console.error('imgur upload failed', err.message);
@@ -63,6 +63,48 @@ const adminService = {
       }).then((restaurant) => {
         callback({ status: 'success', message: 'restaurant was successfully created' });
       });
+    }
+  },
+
+  putRestaurant: (req, res, callback) => {
+    if (!req.body.name) {
+      return callback({ status: 'error', message: "name didn't exist" })
+    }
+
+    const { file } = req
+    if (file) {
+      imgur.uploadFile(file.path)
+        .then((img) => {
+          Restaurant.update({
+            name: req.body.name,
+            tel: req.body.tel,
+            address: req.body.address,
+            opening_hours: req.body.opening_hours,
+            description: req.body.description,
+            image: file ? img.data.link : restaurant.image,
+            CategoryId: req.body.categoryId
+          }).then((restaurant) => {
+            callback({ status: 'success', message: 'restaurant was successfully to update' })
+          })
+        })
+        .catch((err) => {
+          console.error('imgur upload failed', err.message);
+        });
+    } else {
+      return Restaurant.findByPk(req.params.id)
+        .then((restaurant) => {
+          restaurant.update({
+            name: req.body.name,
+            tel: req.body.tel,
+            address: req.body.address,
+            opening_hours: req.body.opening_hours,
+            description: req.body.description,
+            image: restaurant.image,
+            CategoryId: req.body.categoryId
+          }).then((restaurant) => {
+            callback({ status: 'success', message: 'restaurant was successfully to update' })
+          })
+        })
     }
   },
 
